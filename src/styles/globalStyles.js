@@ -7,6 +7,7 @@ const globalStyles = createGlobalStyle`
         padding: 0;
         box-sizing: border-box;
         outline: none;
+        transition: 0.2s linear;
     } 
     
     button{
