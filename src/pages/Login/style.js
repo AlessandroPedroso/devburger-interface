@@ -17,11 +17,9 @@ export const LeftContainer = styled.div`
     width: 100%;
     max-width: 50%;
     
-
     display:flex;
     align-items: center;
     justify-content: center;
-    
 
     img{
         width: 60%;
