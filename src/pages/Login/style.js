@@ -63,6 +63,8 @@ export const Titile = styled.h2`
 
    span{
     color: #9758A6;
+    font-family: "Road Rage", sans-serif;
+
    }
 `;
 
@@ -73,8 +75,6 @@ export const Form = styled.form`
    padding: 20px;
    width: 100%;
    max-width: 400px;
-
-
 `;
 
 export const InputContainer = styled.div`

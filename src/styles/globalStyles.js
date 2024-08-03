@@ -8,9 +8,12 @@ const globalStyles = createGlobalStyle`
         box-sizing: border-box;
         outline: none;
         transition: 0.2s linear;
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-style: normal;
     } 
     
-    button{
+    button,a{
         cursor: pointer;
     }
 
