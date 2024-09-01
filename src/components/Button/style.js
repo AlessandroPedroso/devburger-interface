@@ -11,7 +11,7 @@ export const ContainerButton = styled.button`
 
     font-family: "Road Rage", sans-serif;
     font-size: 30px;
-    color:#ffffff;
+    color:${(props) => (props.red ? 'red' : '#fff')};
 
     &:hover{
         background-color: #6F357C;

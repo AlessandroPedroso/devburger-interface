@@ -9,6 +9,9 @@
 			"recommended": true,
 			"suspicious": {
 				"noCommentText": "off"
+			},
+			"a11y": {
+				"useValidAnchor": "off"
 			}
 		}
 	},
