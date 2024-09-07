@@ -3,12 +3,16 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
+import { useNavigate } from 'react-router-dom';
+
 import Logo from '../../assets/logo.svg';
 import Button from '../../components/Button';
 import { api } from '../../services/api.js';
-import { Container, Form, InputContainer, LeftContainer, RigthContainer, Titile } from './style';
+import { Container, Form, InputContainer, LeftContainer, Link, RigthContainer, Titile } from './style';
 
 export default function Login() {
+	const navigate = useNavigate();
+
 	const schema = yup
 		.object({
 			email: yup.string().email('Digite um e-mail válido').required('O e-mail é obrigatório'),
@@ -25,18 +29,31 @@ export default function Login() {
 	});
 
 	const onSubmit = async (data) => {
-		const response = await toast.promise(
-			api.post('session', {
-				email: data.email,
-				password: data.password,
-			}),
+		try {
+			const response = await toast.promise(
+				api.post('session', {
+					email: data.email,
+					password: data.password,
+				}),
 
-			{
-				pending: 'Verificando seus dados',
-				success: 'Seja Bem-vinda(a)👌',
-				error: 'Email ou Senha Incorretos 🤯',
-			},
-		);
+				{
+					pending: 'Verificando seus dados',
+
+					success: {
+						render() {
+							setTimeout(() => {
+								navigate('/home');
+							}, 2000);
+							return 'Seja Bem-vinda(a)👌';
+						},
+					},
+
+					error: 'Email ou Senha Incorretos 🤯',
+				},
+			);
+		} catch (error) {
+			toast.error('Falha no Sistema! Tente novamente');
+		}
 	};
 
 	return (
@@ -69,7 +86,7 @@ export default function Login() {
 					</Button>
 				</Form>
 				<p>
-					Não possui conta? <a>Clique aqui.</a>
+					Não possui conta? <Link to="/cadastro">Clique aqui.</Link>
 				</p>
 			</RigthContainer>
 		</Container>
