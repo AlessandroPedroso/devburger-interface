@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
+import { createRegister } from '../../utils/dataAPi.js';
 
 import Logo from '../../assets/logo.svg';
 import Button from '../../components/Button/index.jsx';
@@ -30,29 +31,42 @@ export default function Register() {
 	});
 
 	const onSubmit = async (data) => {
-		try {
-			const { status } = await api.post(
-				'users',
-				{
-					name: data.name,
-					email: data.email,
-					password: data.password,
-				},
-				{
-					validateStatus: () => true,
-				},
-			);
+		// try {
+		Promise.all([createRegister(data)])
+			.then(([registerStatus]) => {
+				if (registerStatus === 200 || registerStatus === 201) {
+					toast.success('Conta criado com sucesso!');
+				} else if (registerStatus === 400) {
+					toast.error('Email já cadastrado! Faça o login para condi');
+				} else {
+					throw new Error(); //qualquer outro erro manda o erro para o catch
+				}
+			})
+			.catch(() => {
+				toast.error('Falha no Sistema! Tente novamente');
+			});
+		// const { status } = await api.post(
+		// 	'users',
+		// 	{
+		// 		name: data.name,
+		// 		email: data.email,
+		// 		password: data.password,
+		// 	},
+		// 	{
+		// 		validateStatus: () => true,
+		// 	},
+		// );
 
-			if (status === 200 || status === 201) {
-				toast.success('Conta criado com sucesso!');
-			} else if (status === 400) {
-				toast.error('Email já cadastrado! Faça o login para condi');
-			} else {
-				throw new Error(); //qualquer outro erro manda o erro para o catch
-			}
-		} catch (error) {
-			toast.error('Falha no Sistema! Tente novamente');
-		}
+		// if (status === 200 || status === 201) {
+		// 	toast.success('Conta criado com sucesso!');
+		// } else if (status === 400) {
+		// 	toast.error('Email já cadastrado! Faça o login para condi');
+		// } else {
+		// 	throw new Error(); //qualquer outro erro manda o erro para o catch
+		// }
+		// } catch (error) {
+		// 	toast.error('Falha no Sistema! Tente novamente');
+		// }
 	};
 
 	return (
