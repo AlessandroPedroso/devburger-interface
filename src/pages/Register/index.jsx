@@ -7,7 +7,6 @@ import { createRegister } from '../../utils/dataAPi.js';
 
 import Logo from '../../assets/logo.svg';
 import Button from '../../components/Button/index.jsx';
-import { api } from '../../services/api.js';
 import { Container, Form, InputContainer, LeftContainer, Link, RigthContainer, Titile } from './style.js';
 
 export default function Register() {
@@ -42,7 +41,7 @@ export default function Register() {
 					}, 2000);
 					toast.success('Conta criado com sucesso!');
 				} else if (registerStatus === 400) {
-					toast.error('Email já cadastrado! Faça o login para condi');
+					toast.error('Email já cadastrado! Faça o login.');
 				} else {
 					throw new Error(); //qualquer outro erro manda o erro para o catch
 				}
