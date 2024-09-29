@@ -15,3 +15,11 @@ export async function createRegister(data) {
 
 	return status;
 }
+
+export async function getCategories() {
+	const response = await api.get('categories', {
+		validateStatus: () => true,
+	});
+
+	return response;
+}
