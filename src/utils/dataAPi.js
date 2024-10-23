@@ -23,3 +23,11 @@ export async function getCategories() {
 
 	return response;
 }
+
+export async function getProduct() {
+	const { data } = await api.get('products', {
+		validateStatus: () => true,
+	});
+
+	return data;
+}
