@@ -23,8 +23,3 @@ export const Container = styled.section`
     background: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)),url('${background}');
     
 `;
-
-export const Content = styled.div`
-padding-bottom: 70px;
-
-`;

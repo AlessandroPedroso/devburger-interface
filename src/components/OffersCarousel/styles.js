@@ -5,7 +5,26 @@ export const Container = styled.div`
         padding-right: 40px;
     }
 
+    overflow-x: hidden;
+
+    .react-multi-carousel-list{
+        overflow: visible;
+    }
+
     padding-left:40px;
+    padding-bottom: 40px;
+
+    .react-multiple-carousel__arrow--left {
+    left: 15px;
+    top: 10px;
+}
+.react-multiple-carousel__arrow--right {
+    
+    top: 10px;
+}
+
+
+
 `;
 export const Title = styled.h2`
     font-size:32px;
@@ -30,26 +49,4 @@ export const Title = styled.h2`
         transform: translateX(-50%); */
     }
 
-`;
-export const ContainerItems = styled.div`
-
-    background: url('${(props) => props.imageUrl}'),no-repeat;
-    background-position: center;
-    background-size:cover;
-    display: flex;
-    align-items: center;
-    padding:20px 10px;
-    width: 100%;
-    height: 250px;
-    border-radius: 20px;
-
-    p{
-        color:white;
-        background: rgba(0,0,0,0.5);
-        padding: 10px 30px;
-        border-radius: 50px;
-        font-size: 22.5px;
-        font-weight: 700;
-        margin-top: 100px;
-    }
 `;

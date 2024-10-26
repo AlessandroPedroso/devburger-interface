@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { getProduct } from '../../utils/dataAPi';
-import { Container, ContainerItems, Title } from './styles';
+import { formatPrice } from '../../utils/formatPrice';
+import CardProduct from '../CardProduct';
+import { Container, Title } from './styles';
 
 export default function OffersCarousel() {
 	const [offers, setOffers] = useState([]);
@@ -13,8 +15,7 @@ export default function OffersCarousel() {
 
 			//faz o filtro com todas as ofertas disponivel
 			// const onlyOffers = data.filter((products) => products.offer === true);
-			const onlyOffers = data.filter((products) => products.offer);
-			console.log(onlyOffers);
+			const onlyOffers = data.filter((products) => products.offer).map((product) => ({ currencyValue: formatPrice(product.price), ...product })); // realiza os filtros dos produtos verdadeiros
 
 			setOffers(onlyOffers);
 		}
@@ -46,10 +47,8 @@ export default function OffersCarousel() {
 		<Container>
 			<Title>Ofertas do dia</Title>
 			<Carousel responsive={responsive} infinite={true} partialVisbile={false} itemClass="carousel-item">
-				{offers.map((category) => (
-					<ContainerItems key={category.id} imageUrl={category.url}>
-						<p>{category.name}</p>
-					</ContainerItems>
+				{offers.map((products) => (
+					<CardProduct key={products.id} products={products} />
 				))}
 			</Carousel>
 		</Container>
