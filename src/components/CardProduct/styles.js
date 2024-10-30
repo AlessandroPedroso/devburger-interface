@@ -9,7 +9,8 @@ export const Container = styled.div`
     padding:20px;
     border-radius: 28px;
     background-color: #ffffff;
-   
+    position: relative;
+    max-width: 315px;
     cursor: grab;
     box-shadow: 0px 4px 50px 0px #00000026;
 
