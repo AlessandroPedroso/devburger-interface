@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import CardProduct from '../../components/CardProduct/index.jsx';
 import { getCategories, getProduct } from '../../utils/dataAPi.js';
 import { formatPrice } from '../../utils/formatPrice.js';
@@ -7,12 +8,29 @@ import { Banner, CategoryButton, CategoryMenu, Container, ProductsContainer } fr
 export const Menu = () => {
 	const [categories, setCategories] = useState([]);
 	const [products, setProducts] = useState([]);
+	const [filteredProducts, setFilteredProdutcts] = useState([]);
+
+	const navigate = useNavigate();
+
+	const { search } = useLocation();
+	const queryParams = new URLSearchParams(search);
+
+	const [activeCategory, setActiveCategory] = useState(() => {
+		const categoryId = +queryParams.get('categoria'); // + => converte para number
+
+		if (categoryId) {
+			return categoryId;
+		}
+
+		return 0;
+	});
 
 	useEffect(() => {
 		async function loadCategoriesAndProducts() {
 			Promise.all([getCategories(), getProduct()]).then(([dataCategories, dataProducts]) => {
 				const newCategories = [{ id: 0, name: 'Todas' }, ...dataCategories.data];
 				setCategories(newCategories);
+
 				const newProducts = dataProducts.map((product) => ({ currencyValue: formatPrice(product.price), ...product })); // realiza os filtros dos produtos verdadeiros
 				setProducts(newProducts);
 			});
@@ -39,6 +57,16 @@ export const Menu = () => {
 
 		// loadProducts();
 	}, []);
+
+	useEffect(() => {
+		if (activeCategory === 0) {
+			setFilteredProdutcts(products);
+		} else {
+			const newFilteredProducts = products.filter((products) => products.category_id === activeCategory);
+			setFilteredProdutcts(newFilteredProducts);
+		}
+	}, [products, activeCategory]);
+
 	return (
 		<Container>
 			<Banner>
@@ -54,12 +82,20 @@ export const Menu = () => {
 
 			<CategoryMenu>
 				{categories.map((category) => (
-					<CategoryButton key={category.id}>{category.name}</CategoryButton>
+					<CategoryButton
+						key={category.id}
+						$isActiveCategory={category.id === activeCategory}
+						onClick={() => {
+							navigate({ pathname: '/cardapio', search: `?categoria=${category.id}` }, { replace: true }, setActiveCategory(category.id));
+						}}
+					>
+						{category.name}
+					</CategoryButton>
 				))}
 			</CategoryMenu>
 
 			<ProductsContainer>
-				{products.map((products) => (
+				{filteredProducts.map((products) => (
 					<CardProduct products={products} key={products.id} />
 				))}
 			</ProductsContainer>
