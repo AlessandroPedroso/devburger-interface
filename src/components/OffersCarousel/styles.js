@@ -14,7 +14,7 @@ export const Container = styled.div`
     padding-left:40px;
     padding-bottom: 40px;
 
-    .react-multiple-carousel__arrow--left {
+ .react-multiple-carousel__arrow--left {
     left: 15px;
     top: 10px;
 }

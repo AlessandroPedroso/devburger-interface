@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import ButtonVoltar from '../../components/ButtonVoltar/index.jsx';
 import CardProduct from '../../components/CardProduct/index.jsx';
 import { getCategories, getProduct } from '../../utils/dataAPi.js';
 import { formatPrice } from '../../utils/formatPrice.js';
 import { Banner, CategoryButton, CategoryMenu, Container, ProductsContainer } from './styles.js';
-
 export const Menu = () => {
 	const [categories, setCategories] = useState([]);
 	const [products, setProducts] = useState([]);
@@ -79,7 +79,7 @@ export const Menu = () => {
 					<span>Esse cardápio está irresistível!</span>
 				</h1>
 			</Banner>
-
+			<ButtonVoltar onClick={() => navigate('/home')} />
 			<CategoryMenu>
 				{categories.map((category) => (
 					<CategoryButton
