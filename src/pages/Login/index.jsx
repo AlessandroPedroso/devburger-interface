@@ -7,11 +7,13 @@ import { useNavigate } from 'react-router-dom';
 
 import Logo from '../../assets/logo.svg';
 import Button from '../../components/Button';
+import { userUser } from '../../hooks/UserContext.jsx';
 import { api } from '../../services/api.js';
 import { Container, Form, InputContainer, LeftContainer, Link, RigthContainer, Titile } from './style';
 
 export default function Login() {
 	const navigate = useNavigate();
+	const { putUserData } = userUser();
 
 	const schema = yup
 		.object({
@@ -30,9 +32,7 @@ export default function Login() {
 
 	const onSubmit = async (data) => {
 		try {
-			const {
-				data: { token },
-			} = await toast.promise(
+			const { data: userDate } = await toast.promise(
 				api.post('session', {
 					email: data.email,
 					password: data.password,
@@ -53,8 +53,8 @@ export default function Login() {
 					error: 'Email ou Senha Incorretos 🤯',
 				},
 			);
-
-			localStorage.setItem('token', token);
+			putUserData(userDate);
+			// localStorage.setItem('token', token);
 		} catch (error) {
 			toast.error('Falha no Sistema! Tente novamente');
 		}

@@ -1,32 +1,38 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
 const UserContext = createContext({});
-const UserContextTeste = createContext({});
 
 export const UserProvider = ({ children }) => {
-	const [userInfo, setUserInfo] = useState({ id: 1, name: 'Alessandro Schuquel Pedroso' });
-	const [teste, SetTeste] = useState('teste');
+	const [userInfo, setUserInfo] = useState({});
+
+	const putUserData = (userInfo) => {
+		//guardar as informações do usuario no localStorage ao logar na aplicação
+		setUserInfo(userInfo);
+
+		localStorage.setItem('devburger:userDate', JSON.stringify(userInfo));
+	};
+
+	const logout = () => {
+		setUserInfo({});
+		localStorage.removeItem('devburger:userDate');
+	};
+
+	useEffect(() => {
+		const userInfoLocalStorage = localStorage.getItem('devburger:userDate');
+		if (userInfo) {
+			setUserInfo(JSON.parse(userInfoLocalStorage));
+		}
+	}, []);
 
 	return (
 		<>
-			<UserContext.Provider value={{ userInfo }}>{children}</UserContext.Provider>
-			<UserContextTeste.Provider value={{ teste }}>{children}</UserContextTeste.Provider>
+			<UserContext.Provider value={{ userInfo, putUserData, logout }}>{children}</UserContext.Provider>
 		</>
 	);
 };
 
 export const userUser = () => {
 	const context = useContext(UserContext);
-
-	if (!context) {
-		throw new Error('userUser must be a valid context');
-	}
-
-	return context;
-};
-
-export const userTeste = () => {
-	const context = useContext(UserContextTeste);
 
 	if (!context) {
 		throw new Error('userUser must be a valid context');
