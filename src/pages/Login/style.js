@@ -23,19 +23,23 @@ export const LeftContainer = styled.div`
     /* width: 100%; */
     max-width: 100%;
     
-    display:flex;
+    display:none;
     align-items: center;
     justify-content: center;
 
+
     img{
-        width: 40%;
+        width: 40px;
     }
 
     @media (min-width: 768px){
+        display:flex;
         width: 100%;
         max-width: 50%;
+        padding:0px 10px;
         img{
-            width: 60%;
+            width: 400px;
+            max-width:100%;
         }
     }
 `;

@@ -14,8 +14,8 @@ export const Banner = styled.div`
         font-size: 80px;
         color: #f4f4f4;
         position: absolute;
-        right: 20%;
-        top:10%;
+        right: 10%;
+        top:35%;
     }
 `;
 
